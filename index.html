@@ -337,6 +337,42 @@ button,input,select{font:inherit;color:inherit}
 
 footer .wrap{padding-block:26px 30px;display:flex;flex-wrap:wrap;gap:6px 24px;justify-content:space-between;color:var(--faint);font-size:.92rem}
 
+
+/* نافذة الحجز */
+.bookcta{padding:22px 18px;display:grid;gap:18px}
+.ticks{list-style:none;margin:0;padding:0;display:grid;gap:10px;color:var(--muted)}
+.ticks li{display:flex;gap:10px;align-items:flex-start}
+.ticks .ic{flex:none;color:var(--gold);margin-top:3px}
+@media(min-width:700px){.bookcta{padding:30px;grid-template-columns:1fr auto;align-items:center}}
+html.lock{overflow:hidden}
+.dlg{border:0;padding:0;margin:0;max-width:none;max-height:none;width:100%;height:100%;background:transparent;color:var(--ink)}
+.dlg[open]{display:flex;align-items:flex-end;justify-content:center}
+.dlg::backdrop{background:rgba(4,7,12,.74)}
+.dlg-in{
+  width:100%;max-width:680px;max-height:96dvh;display:flex;flex-direction:column;overflow:hidden;
+  background:linear-gradient(160deg,var(--bg2),var(--bg));border:1px solid var(--edge);border-bottom:0;
+  border-radius:26px 26px 0 0;box-shadow:0 -24px 60px -20px rgba(0,0,0,.7),inset 0 1px 0 var(--hi);
+  animation:dlgUp .28s ease both;
+}
+@keyframes dlgUp{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.dlg-h{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 18px 12px;border-bottom:1px solid var(--edge-soft)}
+.dlg-h h2{font-family:var(--fd);font-size:1.3rem;margin:0;line-height:1.3}
+.dlg-h p{margin:2px 0 0;color:var(--muted);font-size:.92rem}
+.x{flex:none;width:44px;height:44px;border-radius:14px;border:1px solid var(--edge);background:var(--field);color:var(--ink);display:grid;place-items:center;cursor:pointer}
+.x .ic{transform:rotate(45deg);width:22px;height:22px}
+.dlg .form{padding:0;display:flex;flex-direction:column;min-height:0;flex:1;gap:0}
+.dlg-body{overflow-y:auto;overscroll-behavior:contain;padding:18px;display:grid;gap:18px;-webkit-overflow-scrolling:touch}
+.dlg .fine{display:none}
+.dlg .msg{min-height:0}
+.dlg .msg:empty{display:none}
+.dlg .sendrow{padding:12px 18px calc(12px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--edge-soft);background:var(--bg2);display:grid;gap:8px}
+@media(min-width:700px){
+  .dlg[open]{align-items:center}
+  .dlg-in{border-radius:26px;border-bottom:1px solid var(--edge);max-height:92dvh}
+  .dlg-body{padding:22px 26px}
+}
+@media(prefers-reduced-motion:reduce){.dlg-in{animation:none}}
+
 /* شريط الحجز السفلي */
 .bar{
   position:fixed;inset-inline:0;bottom:0;z-index:60;background:var(--bar);border-top:1px solid var(--edge-soft);
@@ -515,8 +551,77 @@ footer .wrap{padding-block:26px 30px;display:flex;flex-wrap:wrap;gap:6px 24px;ju
 
 <section id="book" class="sec">
   <div class="wrap">
-    <div class="hd"><h2>احجز مشوارك</h2><p>املا بيانات الرحلة وشوف السيارة والتكلفة التقريبية قبل ما تبعت الطلب.</p></div>
-    <form id="bookForm" class="form glass" autocomplete="off" novalidate>
+    <div class="hd"><h2>احجز مشوارك</h2><p>املا بيانات الرحلة في نافذة سريعة، وهنجهز لك رسالة كاملة على واتساب.</p></div>
+    <div class="bookcta glass">
+      <ul class="ticks">
+        <li><svg class="ic"><use href="#i-check"/></svg>السيارة بتتحدد تلقائيًا حسب عدد الأفراد والحقائب</li>
+        <li><svg class="ic"><use href="#i-check"/></svg>تكلفة ومدة تقديرية قبل ما تبعت</li>
+        <li><svg class="ic"><use href="#i-check"/></svg>الرسالة بتوصل لنا منظمة وجاهزة للتأكيد</li>
+      </ul>
+      <button class="btn btn-gold" type="button" data-open-book><svg class="ic"><use href="#i-car"/></svg>ابدأ الحجز</button>
+    </div>
+  </div>
+</section>
+
+<section id="faq" class="sec" aria-labelledby="faq-h">
+  <div class="wrap">
+    <div class="hd"><h2 id="faq-h">أسئلة شائعة</h2></div>
+    <div class="faq">
+      <details><summary>إزاي أحجز؟<svg class="ic"><use href="#i-chev"/></svg></summary><p>املا نموذج الحجز في الصفحة وابعته على واتساب، أو ابعتلنا رسالة على 01092358849. بنرد عليك نأكد السيارة والتكلفة والميعاد.</p></details>
+      <details><summary>الحساب بيتم إزاي؟<svg class="ic"><use href="#i-chev"/></svg></summary><p>الحساب بالكيلومتر حسب نوع السيارة، وسعر الكيلو ظاهر في قسم الأسعار. التكلفة النهائية بتتأكد بعد تحديد المسافة الفعلية.</p></details>
+      <details><summary>السيارة بتتحدد إزاي؟<svg class="ic"><use href="#i-chev"/></svg></summary><p>بتتحدد تلقائيًا في نموذج الحجز حسب عدد الأفراد والحقائب، وبتشوفها مع سعر الكيلو قبل ما تبعت الطلب.</p></details>
+      <details><summary>بتوصلوا للمطار؟<svg class="ic"><use href="#i-chev"/></svg></summary><p>أيوه، توصيل من وإلى جميع المطارات مع استقبال VIP.</p></details>
+      <details><summary>عندكم مشاوير خارج الإسكندرية؟<svg class="ic"><use href="#i-chev"/></svg></summary><p>أيوه، بنعمل مشاوير داخل وخارج المحافظة بسائق محترف والتزام كامل بالمواعيد.</p></details>
+      <details><summary>إزاي أحدد موقعي بدقة؟<svg class="ic"><use href="#i-chev"/></svg></summary><p>اضغط "موقعي الحالي" في نقطة الانطلاق، أو اختار المكان من خرائط جوجل والصق الرابط في الخانة. الموقع بيوصل للسواق في رسالة الواتساب.</p></details>
+      <details><summary>إيه موضوع كاش باك 10%؟<svg class="ic"><use href="#i-chev"/></svg></summary><p>بنقدم كاش باك 10% على الرحلة. اسأل عنه على واتساب وهنقولك التفاصيل.</p></details>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="sec">
+  <div class="wrap">
+    <div class="hd"><h2>تواصل معانا</h2><p>الإسكندرية، مصر. مفتوحين دائمًا.</p></div>
+    <ul class="contact glass">
+      <li>
+        <div class="who"><svg class="ic"><use href="#i-wa"/></svg><div><small>واتساب الحجوزات</small><div class="v num ltr" id="n0">01092358849</div></div></div>
+        <div class="row"><a class="btn btn-wa btn-sm" href="https://wa.me/201092358849" target="_blank" rel="noopener">افتح واتساب</a><a class="btn btn-glass btn-sm" href="tel:+201092358849"><svg class="ic"><use href="#i-phone"/></svg>اتصل</a><button class="btn btn-glass btn-sm" type="button" data-copy="n0">نسخ الرقم</button></div>
+      </li>
+      <li>
+        <div class="who"><svg class="ic"><use href="#i-wa"/></svg><div><small>واتساب</small><div class="v num ltr" id="n1">01271610006</div></div></div>
+        <div class="row"><a class="btn btn-glass btn-sm" href="https://wa.me/201271610006" target="_blank" rel="noopener">افتح واتساب</a><button class="btn btn-glass btn-sm" type="button" data-copy="n1">نسخ الرقم</button></div>
+      </li>
+      <li>
+        <div class="who"><svg class="ic"><use href="#i-wa"/></svg><div><small>واتساب (رقم ثاني)</small><div class="v num ltr" id="n2">0103 881 9449</div></div></div>
+        <div class="row"><a class="btn btn-glass btn-sm" href="https://wa.me/201038819449" target="_blank" rel="noopener">افتح واتساب</a><button class="btn btn-glass btn-sm" type="button" data-copy="n2">نسخ الرقم</button></div>
+      </li>
+      <li>
+        <div class="who"><svg class="ic"><use href="#i-mail"/></svg><div><small>البريد الإلكتروني</small><div class="v ltr" id="mail">kironabil55@gmail.com</div></div></div>
+        <div class="row"><a class="btn btn-glass btn-sm" href="mailto:kironabil55@gmail.com">أرسل إيميل</a><button class="btn btn-glass btn-sm" type="button" data-copy="mail">نسخ الإيميل</button></div>
+      </li>
+      <li>
+        <div class="who"><svg class="ic"><use href="#i-fb"/></svg><div><small>صفحتنا على فيسبوك</small><div class="v">Route x limousine</div></div></div>
+        <div class="row"><a class="btn btn-glass btn-sm" href="https://www.facebook.com/share/1EqvkVx1hp/?mibextid=wwXIfr" target="_blank" rel="noopener">افتح الصفحة</a></div>
+      </li>
+    </ul>
+    <p class="addr">العنوان: الإسكندرية، مصر 21613</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap"><span>Route X Limousine Service</span><span>الإسكندرية، مصر</span></div>
+</footer>
+
+
+<dialog id="bookDlg" class="dlg" aria-labelledby="dlg-t">
+  <div class="dlg-in">
+    <div class="dlg-h">
+      <div><h2 id="dlg-t">احجز مشوارك</h2><p>املا البيانات وابعتها لنا على واتساب</p></div>
+      <button class="x" type="button" data-close aria-label="إغلاق"><svg class="ic"><use href="#i-plus"/></svg></button>
+    </div>
+    <form id="bookForm" class="form" autocomplete="off" novalidate>
+      <div class="dlg-body">
 
       <fieldset class="fset">
         <legend>مسارك</legend>
@@ -632,67 +737,19 @@ footer .wrap{padding-block:26px 30px;display:flex;flex-wrap:wrap;gap:6px 24px;ju
         <span class="note w" id="sWarn"></span>
       </div>
 
+      </div>
       <div class="sendrow">
         <p class="msg" id="formMsg" role="alert"></p>
         <a id="send" class="btn btn-wa" href="https://wa.me/201092358849" target="_blank" rel="noopener"><svg class="ic"><use href="#i-wa"/></svg>ابعت الطلب على واتساب</a>
         <p class="fine">الزرار بيفتح واتساب برسالة جاهزة. الحجز بيتأكد لما نرد عليك، والتكلفة والمدة تقديرية وبتتأكد بعد تحديد المسافة الفعلية.</p>
       </div>
+    
     </form>
   </div>
-</section>
-
-<section id="faq" class="sec" aria-labelledby="faq-h">
-  <div class="wrap">
-    <div class="hd"><h2 id="faq-h">أسئلة شائعة</h2></div>
-    <div class="faq">
-      <details><summary>إزاي أحجز؟<svg class="ic"><use href="#i-chev"/></svg></summary><p>املا نموذج الحجز في الصفحة وابعته على واتساب، أو ابعتلنا رسالة على 01092358849. بنرد عليك نأكد السيارة والتكلفة والميعاد.</p></details>
-      <details><summary>الحساب بيتم إزاي؟<svg class="ic"><use href="#i-chev"/></svg></summary><p>الحساب بالكيلومتر حسب نوع السيارة، وسعر الكيلو ظاهر في قسم الأسعار. التكلفة النهائية بتتأكد بعد تحديد المسافة الفعلية.</p></details>
-      <details><summary>السيارة بتتحدد إزاي؟<svg class="ic"><use href="#i-chev"/></svg></summary><p>بتتحدد تلقائيًا في نموذج الحجز حسب عدد الأفراد والحقائب، وبتشوفها مع سعر الكيلو قبل ما تبعت الطلب.</p></details>
-      <details><summary>بتوصلوا للمطار؟<svg class="ic"><use href="#i-chev"/></svg></summary><p>أيوه، توصيل من وإلى جميع المطارات مع استقبال VIP.</p></details>
-      <details><summary>عندكم مشاوير خارج الإسكندرية؟<svg class="ic"><use href="#i-chev"/></svg></summary><p>أيوه، بنعمل مشاوير داخل وخارج المحافظة بسائق محترف والتزام كامل بالمواعيد.</p></details>
-      <details><summary>إزاي أحدد موقعي بدقة؟<svg class="ic"><use href="#i-chev"/></svg></summary><p>اضغط "موقعي الحالي" في نقطة الانطلاق، أو اختار المكان من خرائط جوجل والصق الرابط في الخانة. الموقع بيوصل للسواق في رسالة الواتساب.</p></details>
-      <details><summary>إيه موضوع كاش باك 10%؟<svg class="ic"><use href="#i-chev"/></svg></summary><p>بنقدم كاش باك 10% على الرحلة. اسأل عنه على واتساب وهنقولك التفاصيل.</p></details>
-    </div>
-  </div>
-</section>
-
-<section id="contact" class="sec">
-  <div class="wrap">
-    <div class="hd"><h2>تواصل معانا</h2><p>الإسكندرية، مصر. مفتوحين دائمًا.</p></div>
-    <ul class="contact glass">
-      <li>
-        <div class="who"><svg class="ic"><use href="#i-wa"/></svg><div><small>واتساب الحجوزات</small><div class="v num ltr" id="n0">01092358849</div></div></div>
-        <div class="row"><a class="btn btn-wa btn-sm" href="https://wa.me/201092358849" target="_blank" rel="noopener">افتح واتساب</a><a class="btn btn-glass btn-sm" href="tel:+201092358849"><svg class="ic"><use href="#i-phone"/></svg>اتصل</a><button class="btn btn-glass btn-sm" type="button" data-copy="n0">نسخ الرقم</button></div>
-      </li>
-      <li>
-        <div class="who"><svg class="ic"><use href="#i-wa"/></svg><div><small>واتساب</small><div class="v num ltr" id="n1">01271610006</div></div></div>
-        <div class="row"><a class="btn btn-glass btn-sm" href="https://wa.me/201271610006" target="_blank" rel="noopener">افتح واتساب</a><button class="btn btn-glass btn-sm" type="button" data-copy="n1">نسخ الرقم</button></div>
-      </li>
-      <li>
-        <div class="who"><svg class="ic"><use href="#i-wa"/></svg><div><small>واتساب (رقم ثاني)</small><div class="v num ltr" id="n2">0103 881 9449</div></div></div>
-        <div class="row"><a class="btn btn-glass btn-sm" href="https://wa.me/201038819449" target="_blank" rel="noopener">افتح واتساب</a><button class="btn btn-glass btn-sm" type="button" data-copy="n2">نسخ الرقم</button></div>
-      </li>
-      <li>
-        <div class="who"><svg class="ic"><use href="#i-mail"/></svg><div><small>البريد الإلكتروني</small><div class="v ltr" id="mail">kironabil55@gmail.com</div></div></div>
-        <div class="row"><a class="btn btn-glass btn-sm" href="mailto:kironabil55@gmail.com">أرسل إيميل</a><button class="btn btn-glass btn-sm" type="button" data-copy="mail">نسخ الإيميل</button></div>
-      </li>
-      <li>
-        <div class="who"><svg class="ic"><use href="#i-fb"/></svg><div><small>صفحتنا على فيسبوك</small><div class="v">Route x limousine</div></div></div>
-        <div class="row"><a class="btn btn-glass btn-sm" href="https://www.facebook.com/share/1EqvkVx1hp/?mibextid=wwXIfr" target="_blank" rel="noopener">افتح الصفحة</a></div>
-      </li>
-    </ul>
-    <p class="addr">العنوان: الإسكندرية، مصر 21613</p>
-  </div>
-</section>
-
-</main>
-
-<footer>
-  <div class="wrap"><span>Route X Limousine Service</span><span>الإسكندرية، مصر</span></div>
-</footer>
+</dialog>
 
 <div class="bar" id="bar">
-  <a class="btn btn-wa" href="https://wa.me/201092358849?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D8%B9%D8%A7%D9%8A%D8%B2%20%D8%A3%D8%AD%D8%AC%D8%B2%20%D9%85%D8%B4%D9%88%D8%A7%D8%B1%20%D9%85%D8%B9%20Route%20X" target="_blank" rel="noopener"><svg class="ic"><use href="#i-wa"/></svg>احجز على واتساب</a>
+  <a class="btn btn-gold" href="#book"><svg class="ic"><use href="#i-car"/></svg>احجز الآن</a>
   <a class="btn btn-glass" href="tel:+201092358849"><svg class="ic"><use href="#i-phone"/></svg>اتصل</a>
 </div>
 
@@ -761,11 +818,14 @@ footer .wrap{padding-block:26px 30px;display:flex;flex-wrap:wrap;gap:6px 24px;ju
     if (url) return { kind: "link", url: url, text: v };
     return { kind: "text", text: v };
   }
-  function locLines(label, p) {
+  function locMsg(icon, label, p) {
     if (p.kind === "empty") return [];
-    if (p.kind === "text") return [label + ": " + p.text];
-    if (p.kind === "link") return [label + " (خرائط جوجل): " + p.url];
-    return [label + " (خرائط جوجل): " + (p.url || p.link)];
+    var out = [];
+    if (p.kind === "text") return [icon + " *" + label + ":* " + p.text];
+    var u = p.url || p.link;
+    out.push(icon + " *" + label + ":* " + (p.text && p.text !== u ? p.text : "حسب الموقع على الخريطة"));
+    out.push("      🔗 " + u);
+    return out;
   }
   function mapHref(p) {
     if (p.kind === "link") return p.url;
@@ -907,24 +967,34 @@ footer .wrap{padding-block:26px 30px;display:flex;flex-wrap:wrap;gap:6px 24px;ju
 
   var link = $("send"), msg = $("formMsg");
   function build() {
-    var r = refresh(), P = updateMaps();
-    var L = ["طلب حجز جديد - Route X Limousine", ""];
-    L.push("الاسم: " + val("f-name"));
-    L.push("رقم الهاتف: " + val("f-phone"));
-    if (val("f-phone2")) L.push("هاتف بديل: " + val("f-phone2"));
-    L = L.concat(locLines("نقطة الانطلاق", P.from), locLines("نقطة إضافية", P.via), locLines("نقطة الوصول", P.to));
-    L.push("عدد الأفراد: " + val("f-pax"));
+    var r = refresh(), P = updateMaps(), L = [], bar = "━━━━━━━━━━━━━━━";
+    L.push("🚘 *طلب حجز جديد*");
+    L.push("✨ *Route X Limousine*");
+    L.push(bar, "");
+    L.push("👤 *بيانات العميل*");
+    L.push("🙍 *الاسم:* " + val("f-name"));
+    L.push("📞 *الهاتف:* " + val("f-phone"));
+    if (val("f-phone2")) L.push("☎️ *هاتف بديل:* " + val("f-phone2"));
+    L.push("", "🗺️ *مسار الرحلة*");
+    L = L.concat(locMsg("📍", "الانطلاق", P.from), locMsg("🛑", "محطة إضافية", P.via), locMsg("🏁", "الوصول", P.to));
+    if (r.km > 0) L.push("📏 *المسافة التقريبية:* " + fmtNum(r.km) + " كم");
+    L.push("", "🚗 *الركاب والسيارة*");
+    L.push("👥 *عدد الأفراد:* " + val("f-pax"));
+    L.push("🧳 *عدد الحقائب:* " + (val("f-bags") || "0"));
     if (r.car) {
-      L.push("السيارة: " + r.car.name);
-      if (r.car.price != null) L.push("سعر الكيلو: " + fmtNum(r.car.price) + " جنيه");
+      L.push("🚙 *السيارة:* " + r.car.name);
+      if (r.car.price != null) L.push("💵 *سعر الكيلو:* " + fmtNum(r.car.price) + " جنيه");
     }
-    L.push("عدد الحقائب: " + (val("f-bags") || "0"));
-    if (r.km > 0) {
-      L.push("المسافة التقريبية: " + fmtNum(r.km) + " كم");
-      if (r.car && r.car.price != null) L.push("التكلفة التقريبية: " + Math.round(r.km * r.car.price) + " جنيه (تقديرية)");
+    L.push("", "🗓️ *موعد الرحلة*");
+    var d = dateText(), t = timeText();
+    L.push("📅 *التاريخ:* " + (d || "—"));
+    L.push("⏰ *ساعة الانطلاق:* " + (t || "—"));
+    L.push("🏁 *الوصول المتوقع:* " + (r.km > 0 ? etaText(r.km) + " (تقديري)" : "يتحدد بعد تأكيد المسار"));
+    if (r.km > 0 && r.car && r.car.price != null) {
+      L.push("", "💰 *التكلفة*");
+      L.push("💸 *التكلفة التقريبية:* " + Math.round(r.km * r.car.price) + " جنيه (تقديرية)");
     }
-    L.push("وقت الانطلاق: " + [dateText(), timeText()].filter(Boolean).join(" - "));
-    L.push("الوقت المقدر للوصول: " + (r.km > 0 ? etaText(r.km) + " (تقديري)" : "يتحدد بعد تأكيد المسار"));
+    L.push("", bar, "✅ برجاء تأكيد الحجز، شكرًا لكم 🌹");
     link.href = "https://wa.me/" + NUMBER + "?text=" + encodeURIComponent(L.join("\n"));
   }
 
@@ -966,7 +1036,7 @@ footer .wrap{padding-block:26px 30px;display:flex;flex-wrap:wrap;gap:6px 24px;ju
       var f = $(m[0][0]);
       if (f.scrollIntoView) f.scrollIntoView({ block: "center", behavior: "smooth" });
       try { f.focus({ preventScroll: true }); } catch (err) {}
-    } else msg.textContent = "";
+    } else { msg.textContent = ""; setTimeout(closeBook, 400); }
   });
   build();
 
@@ -983,11 +1053,26 @@ footer .wrap{padding-block:26px 30px;display:flex;flex-wrap:wrap;gap:6px 24px;ju
     });
   });
 
-  /* إخفاء الشريط السفلي أثناء ظهور نموذج الحجز */
-  var bar = $("bar");
-  if ("IntersectionObserver" in window) {
-    new IntersectionObserver(function (en) { bar.classList.toggle("hide", en[0].isIntersecting); }, { threshold: 0.08 }).observe($("bookForm"));
+  /* نافذة الحجز */
+  var dlg = $("bookDlg"), root = document.documentElement, lastBtn = null;
+  function openBook() {
+    lastBtn = document.activeElement;
+    if (dlg.showModal) { if (!dlg.open) dlg.showModal(); } else dlg.setAttribute("open", "");
+    root.classList.add("lock");
+    build();
   }
+  function closeBook() {
+    if (dlg.close) { if (dlg.open) dlg.close(); } else dlg.removeAttribute("open");
+    root.classList.remove("lock");
+    if (lastBtn && lastBtn.focus) { try { lastBtn.focus({ preventScroll: true }); } catch (err) {} }
+  }
+  dlg.addEventListener("close", function () { root.classList.remove("lock"); });
+  dlg.addEventListener("click", function (e) { if (e.target === dlg) closeBook(); });
+  dlg.querySelector("[data-close]").addEventListener("click", closeBook);
+  [].forEach.call(document.querySelectorAll('a[href="#book"],[data-open-book]'), function (el) {
+    el.addEventListener("click", function (e) { e.preventDefault(); openBook(); });
+  });
+  if (location.hash === "#book") openBook();
 })();
 </script>
 </body>
