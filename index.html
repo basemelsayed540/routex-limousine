@@ -824,7 +824,7 @@ html.lock{overflow:hidden}
     if (p.kind === "text") return [icon + " *" + label + ":* " + p.text];
     var u = p.url || p.link;
     out.push(icon + " *" + label + ":* " + (p.text && p.text !== u ? p.text : "حسب الموقع على الخريطة"));
-    out.push("      🔗 " + u);
+    out.push("      ➡️ " + u);
     return out;
   }
   function mapHref(p) {
@@ -968,33 +968,33 @@ html.lock{overflow:hidden}
   var link = $("send"), msg = $("formMsg");
   function build() {
     var r = refresh(), P = updateMaps(), L = [], bar = "━━━━━━━━━━━━━━━";
-    L.push("🚘 *طلب حجز جديد*");
+    L.push("⭐ *طلب حجز جديد*");
     L.push("✨ *Route X Limousine*");
     L.push(bar, "");
-    L.push("👤 *بيانات العميل*");
-    L.push("🙍 *الاسم:* " + val("f-name"));
-    L.push("📞 *الهاتف:* " + val("f-phone"));
+    L.push("☎️ *بيانات العميل*");
+    L.push("✏️ *الاسم:* " + val("f-name"));
+    L.push("☎️ *الهاتف:* " + val("f-phone"));
     if (val("f-phone2")) L.push("☎️ *هاتف بديل:* " + val("f-phone2"));
-    L.push("", "🗺️ *مسار الرحلة*");
-    L = L.concat(locMsg("📍", "الانطلاق", P.from), locMsg("🛑", "محطة إضافية", P.via), locMsg("🏁", "الوصول", P.to));
-    if (r.km > 0) L.push("📏 *المسافة التقريبية:* " + fmtNum(r.km) + " كم");
-    L.push("", "🚗 *الركاب والسيارة*");
-    L.push("👥 *عدد الأفراد:* " + val("f-pax"));
-    L.push("🧳 *عدد الحقائب:* " + (val("f-bags") || "0"));
+    L.push("", "➡️ *مسار الرحلة*");
+    L = L.concat(locMsg("▶️", "الانطلاق", P.from), locMsg("➕", "محطة إضافية", P.via), locMsg("⛳", "الوصول", P.to));
+    if (r.km > 0) L.push("↔️ *المسافة التقريبية:* " + fmtNum(r.km) + " كم");
+    L.push("", "♦️ *الركاب والسيارة*");
+    L.push("☺️ *عدد الأفراد:* " + val("f-pax"));
+    L.push("☑️ *عدد الحقائب:* " + (val("f-bags") || "0"));
     if (r.car) {
-      L.push("🚙 *السيارة:* " + r.car.name);
-      if (r.car.price != null) L.push("💵 *سعر الكيلو:* " + fmtNum(r.car.price) + " جنيه");
+      L.push("♦️ *السيارة:* " + r.car.name);
+      if (r.car.price != null) L.push("⭐ *سعر الكيلو:* " + fmtNum(r.car.price) + " جنيه");
     }
-    L.push("", "🗓️ *موعد الرحلة*");
+    L.push("", "☀️ *موعد الرحلة*");
     var d = dateText(), t = timeText();
-    L.push("📅 *التاريخ:* " + (d || "—"));
+    L.push("☀️ *التاريخ:* " + (d || "—"));
     L.push("⏰ *ساعة الانطلاق:* " + (t || "—"));
-    L.push("🏁 *الوصول المتوقع:* " + (r.km > 0 ? etaText(r.km) + " (تقديري)" : "يتحدد بعد تأكيد المسار"));
+    L.push("⏳ *الوصول المتوقع:* " + (r.km > 0 ? etaText(r.km) + " (تقديري)" : "يتحدد بعد تأكيد المسار"));
     if (r.km > 0 && r.car && r.car.price != null) {
-      L.push("", "💰 *التكلفة*");
-      L.push("💸 *التكلفة التقريبية:* " + Math.round(r.km * r.car.price) + " جنيه (تقديرية)");
+      L.push("", "✅ *التكلفة*");
+      L.push("✅ *التكلفة التقريبية:* " + Math.round(r.km * r.car.price) + " جنيه (تقديرية)");
     }
-    L.push("", bar, "✅ برجاء تأكيد الحجز، شكرًا لكم 🌹");
+    L.push("", bar, "✅ برجاء تأكيد الحجز، شكرًا لكم ✨");
     link.href = "https://wa.me/" + NUMBER + "?text=" + encodeURIComponent(L.join("\n"));
   }
 
