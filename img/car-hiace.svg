@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" preserveAspectRatio="xMidYMin slice" role="img" aria-label="حافلة صغيرة ١٤ راكب">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1c2a44"/><stop offset=".62" stop-color="#101827"/><stop offset="1" stop-color="#090d14"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".5" cy=".42" r=".55">
+      <stop offset="0" stop-color="#5f86c4" stop-opacity=".45"/><stop offset="1" stop-color="#5f86c4" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f4f6fa"/><stop offset=".5" stop-color="#cdd4df"/><stop offset="1" stop-color="#7e8899"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8fb0d8" stop-opacity=".9"/><stop offset="1" stop-color="#1a2438" stop-opacity=".95"/>
+    </linearGradient>
+    <radialGradient id="rim" cx=".4" cy=".35" r=".8">
+      <stop offset="0" stop-color="#f3f5f9"/><stop offset="1" stop-color="#7d8798"/>
+    </radialGradient>
+    <g id="wheel">
+      <circle r="48" fill="#07090d"/>
+      <circle r="40" fill="#14171d"/>
+      <circle r="27" fill="url(#rim)"/>
+      <g stroke="#3b4352" stroke-width="5" stroke-linecap="round">
+        <line x1="0" y1="0" x2="0" y2="-23"/><line x1="0" y1="0" x2="22" y2="-7"/>
+        <line x1="0" y1="0" x2="13" y2="18"/><line x1="0" y1="0" x2="-13" y2="18"/><line x1="0" y1="0" x2="-22" y2="-7"/>
+      </g>
+      <circle r="6" fill="#1b202a"/>
+    </g>
+  </defs>
+  <rect width="800" height="450" fill="url(#bg)"/>
+  <rect width="800" height="450" fill="url(#glow)"/>
+  <rect y="338" width="800" height="112" fill="#0b0f17"/>
+  <rect y="338" width="800" height="2" fill="#2a3550" opacity=".7"/>
+  <ellipse cx="400" cy="342" rx="360" ry="16" fill="#000" opacity=".6"/>
+  <!-- body -->
+  <path d="M46 306 L46 112 C46 94 58 84 76 84 L560 84 C600 86 636 112 662 160 L716 186 C734 194 748 210 748 240 L748 306 Z" fill="url(#body)"/>
+  <path d="M76 84 L560 84 C600 86 636 112 662 160 L716 186" fill="none" stroke="#ffffff" stroke-width="2" opacity=".9"/>
+  <!-- glass: five side windows + windshield -->
+  <path d="M68 170 L68 106 L150 106 L150 170 Z" fill="url(#glass)"/>
+  <path d="M162 170 L162 106 L250 106 L250 170 Z" fill="url(#glass)"/>
+  <path d="M262 170 L262 106 L350 106 L350 170 Z" fill="url(#glass)"/>
+  <path d="M362 170 L362 106 L450 106 L450 170 Z" fill="url(#glass)"/>
+  <path d="M520 170 L520 106 L560 106 C586 108 608 124 628 170 Z" fill="url(#glass)"/>
+  <!-- door lines and stripe -->
+  <g stroke="#7b8598" stroke-width="2" opacity=".85" fill="none">
+    <path d="M156 100 L156 298"/><path d="M456 100 L456 298"/><path d="M512 100 L512 298"/>
+  </g>
+  <rect x="48" y="228" width="698" height="10" fill="#c9a864" opacity=".9"/>
+  <rect x="468" y="210" width="30" height="5" rx="2.5" fill="#7b8598"/>
+  <rect x="176" y="210" width="30" height="5" rx="2.5" fill="#7b8598"/>
+  <!-- lights -->
+  <path d="M720 200 L748 208 L747 222 L716 218 Z" fill="#fffdf2"/>
+  <path d="M720 200 L748 208" stroke="#ffd98a" stroke-width="3"/>
+  <path d="M48 190 L64 186 L66 224 L47 228 Z" fill="#e0243a"/>
+  <rect x="48" y="294" width="700" height="6" fill="#4d5463" opacity=".8"/>
+  <!-- wheels -->
+  <circle cx="190" cy="296" r="54" fill="#06080c"/>
+  <circle cx="612" cy="296" r="54" fill="#06080c"/>
+  <use href="#wheel" x="190" y="296"/>
+  <use href="#wheel" x="612" y="296"/>
+</svg>

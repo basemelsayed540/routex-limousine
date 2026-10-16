@@ -205,17 +205,30 @@ button,input,select{font:inherit;color:inherit}
 }
 
 /* الأسطول */
-.fleet{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.car{padding:16px;display:flex;flex-direction:column;gap:6px;min-width:0;transition:border-color .2s ease,box-shadow .2s ease}
+.fleet-wrap{position:relative}
+.fleet{display:flex;align-items:stretch;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;padding:4px 2px 10px;cursor:grab;touch-action:pan-x pan-y}
+.fleet::-webkit-scrollbar{display:none}
+.fleet.drag{cursor:grabbing;scroll-snap-type:none;user-select:none}
+.fleet.drag .car{pointer-events:none}
+.car{flex:0 0 86%;scroll-snap-align:start;position:relative;overflow:hidden;display:flex;flex-direction:column;min-width:0;color:#f4f1ea;transition:border-color .2s ease,box-shadow .2s ease}
+.car.glass{background:#090d14}
+.car .pic{display:block;position:relative;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;pointer-events:none;-webkit-user-drag:none}
+.car .info{position:relative;z-index:1;padding:0 18px 18px;margin-top:-22px;display:flex;flex-direction:column;gap:6px}
 .car.on{border-color:var(--gold);box-shadow:var(--shadow),0 0 0 3px color-mix(in srgb,var(--gold) 28%,transparent),inset 0 1px 0 var(--hi)}
-.car h3{font-size:1.15rem;font-weight:700;line-height:1.4}
-.car .cap{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:.93rem;line-height:1.5}
+.car h3{font-size:1.4rem;font-weight:800;line-height:1.4}
+.car .cap{display:flex;align-items:center;gap:8px;color:#c3cad6;font-size:.95rem;line-height:1.5}
 .car .cap .ic{width:18px;height:18px}
-.car .pr{margin-top:auto;padding-top:12px;display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;border-top:1px dashed var(--edge)}
-.car .pr b{font-family:var(--fd);font-weight:800;font-size:1.9rem;line-height:1.3;color:var(--gold)}
-.car .pr small{color:var(--muted);font-size:.9rem}
-.car .pr.ask{font-size:.95rem;color:var(--muted);align-items:center}
-@media(min-width:900px){.fleet{grid-template-columns:repeat(4,1fr);gap:16px}.car{padding:22px}}
+.car .pr{margin-top:6px;padding-top:12px;display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;border-top:1px dashed rgba(255,255,255,.22)}
+.car .pr b{font-family:var(--fd);font-weight:800;font-size:2rem;line-height:1.3;color:#dcc28f}
+.car .pr small{color:#c3cad6;font-size:.92rem}
+.car .pr.ask{font-size:1rem;color:#dcc28f;align-items:center}
+.fl-dots{display:flex;justify-content:center;gap:8px;margin-top:10px}
+.fl-dots button{width:9px;height:9px;padding:0;border:0;border-radius:99px;background:var(--edge);cursor:pointer;transition:width .2s ease,background .2s ease}
+.fl-dots button[aria-current="true"]{width:26px;background:var(--gold)}
+.fl-nav{display:none;position:absolute;top:calc(50% - 22px);width:44px;height:44px;border-radius:50%;border:1px solid var(--edge);background:var(--bar);color:var(--ink);font-size:1.3rem;line-height:1;cursor:pointer;z-index:2;align-items:center;justify-content:center;backdrop-filter:blur(10px)}
+.fl-nav[hidden]{display:none!important}
+.fl-prev{inset-inline-start:-14px}.fl-next{inset-inline-end:-14px}
+@media(min-width:900px){.fleet{gap:18px}.car{flex-basis:calc(50% - 9px)}.fl-nav{display:flex}}
 
 /* ليه Route X */
 .why{list-style:none;padding:0;display:grid;gap:0}
@@ -485,31 +498,48 @@ html.lock{overflow:hidden}
 <section id="prices" class="sec">
   <div class="wrap">
     <div class="hd"><h2>الأسعار</h2><p>الحساب بالكيلومتر، والسيارة بتتحدد حسب عدد الأفراد والحقائب.</p></div>
-    <div class="fleet">
-      <article class="car glass" data-name="سيدان" data-max="3" data-price="6.5" data-bags="3">
-        <h3>سيدان</h3>
-        <span class="cap"><svg class="ic"><use href="#i-users"/></svg>حتى 3 أفراد</span>
-        <span class="cap"><svg class="ic"><use href="#i-bag"/></svg>حتى 3 حقائب</span>
-        <div class="pr"><b class="num">6.5</b><small>جنيه / كم</small></div>
-      </article>
-      <article class="car glass" data-name="ميني فان" data-max="6" data-price="7.5" data-bags="3">
-        <h3>ميني فان</h3>
-        <span class="cap"><svg class="ic"><use href="#i-users"/></svg>حتى 6 أفراد</span>
-        <span class="cap"><svg class="ic"><use href="#i-bag"/></svg>حتى 3 حقائب</span>
-        <div class="pr"><b class="num">7.5</b><small>جنيه / كم</small></div>
-      </article>
-      <article class="car glass" data-name="فان" data-max="9" data-price="11" data-bags="">
-        <h3>فان</h3>
-        <span class="cap"><svg class="ic"><use href="#i-users"/></svg>حتى 9 أفراد</span>
-        <span class="cap"><svg class="ic"><use href="#i-bag"/></svg>حقائب بدون حد</span>
-        <div class="pr"><b class="num">11</b><small>جنيه / كم</small></div>
-      </article>
-      <article class="car glass" data-name="هاي إس (Hiace)" data-max="14" data-price="" data-bags="">
-        <h3>هاي إس</h3>
-        <span class="cap"><svg class="ic"><use href="#i-users"/></svg>حتى 14 فرد</span>
-        <span class="cap"><svg class="ic"><use href="#i-bag"/></svg>حقائب بدون حد</span>
-        <div class="pr ask">السعر عند الحجز</div>
-      </article>
+    <div class="fleet-wrap">
+      <button type="button" class="fl-nav fl-prev" aria-label="السيارة السابقة">›</button>
+      <button type="button" class="fl-nav fl-next" aria-label="السيارة التالية">‹</button>
+      <div class="fleet" id="fleet" tabindex="0" role="group" aria-label="السيارات المتاحة، اسحب لرؤية المزيد">
+        <article class="car glass" data-name="سيدان" data-max="3" data-price="6.5" data-bags="3">
+          <img class="pic" src="img/car-sedan.svg" alt="" width="800" height="450" loading="lazy" draggable="false">
+          <div class="info">
+            <h3>سيدان</h3>
+            <span class="cap"><svg class="ic"><use href="#i-users"/></svg>حتى 3 أفراد</span>
+            <span class="cap"><svg class="ic"><use href="#i-bag"/></svg>حتى 3 حقائب</span>
+            <div class="pr"><b class="num">6.5</b><small>جنيه / كم</small></div>
+          </div>
+        </article>
+        <article class="car glass" data-name="ميني فان" data-max="6" data-price="7.5" data-bags="3">
+          <img class="pic" src="img/car-minivan.svg" alt="" width="800" height="450" loading="lazy" draggable="false">
+          <div class="info">
+            <h3>ميني فان</h3>
+            <span class="cap"><svg class="ic"><use href="#i-users"/></svg>حتى 6 أفراد</span>
+            <span class="cap"><svg class="ic"><use href="#i-bag"/></svg>حتى 3 حقائب</span>
+            <div class="pr"><b class="num">7.5</b><small>جنيه / كم</small></div>
+          </div>
+        </article>
+        <article class="car glass" data-name="فان" data-max="9" data-price="11" data-bags="">
+          <img class="pic" src="img/car-van.svg" alt="" width="800" height="450" loading="lazy" draggable="false">
+          <div class="info">
+            <h3>فان</h3>
+            <span class="cap"><svg class="ic"><use href="#i-users"/></svg>حتى 9 أفراد</span>
+            <span class="cap"><svg class="ic"><use href="#i-bag"/></svg>حقائب بدون حد</span>
+            <div class="pr"><b class="num">11</b><small>جنيه / كم</small></div>
+          </div>
+        </article>
+        <article class="car glass" data-name="هاي إس (Hiace)" data-max="14" data-price="" data-bags="">
+          <img class="pic" src="img/car-hiace.svg" alt="" width="800" height="450" loading="lazy" draggable="false">
+          <div class="info">
+            <h3>هاي إس</h3>
+            <span class="cap"><svg class="ic"><use href="#i-users"/></svg>حتى 14 فرد</span>
+            <span class="cap"><svg class="ic"><use href="#i-bag"/></svg>حقائب بدون حد</span>
+            <div class="pr ask">السعر عند الحجز</div>
+          </div>
+        </article>
+      </div>
+      <div class="fl-dots" id="flDots"></div>
     </div>
   </div>
 </section>
@@ -1052,6 +1082,80 @@ html.lock{overflow:hidden}
       try { navigator.clipboard.writeText(text).then(done, fallback); } catch (err) { fallback(); }
     });
   });
+
+  /* شريط السيارات: سحب باللمس أو بالماوس، أسهم ونقاط */
+  (function () {
+    var fl = $("fleet"), dotsBox = $("flDots");
+    if (!fl || !dotsBox) return;
+    var slides = [].slice.call(fl.querySelectorAll(".car"));
+    var prev = document.querySelector(".fl-prev"), next = document.querySelector(".fl-next");
+    var rtl = getComputedStyle(fl).direction === "rtl";
+    var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var dots = slides.map(function (s, i) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.setAttribute("aria-label", "عرض " + (s.getAttribute("data-name") || ("السيارة " + (i + 1))));
+      b.addEventListener("click", function () { go(i); });
+      dotsBox.appendChild(b);
+      return b;
+    });
+    function step() {
+      return slides.length > 1 ? Math.abs(slides[1].offsetLeft - slides[0].offsetLeft) : fl.clientWidth;
+    }
+    function atEnd() { return Math.abs(fl.scrollLeft) >= fl.scrollWidth - fl.clientWidth - 3; }
+    function index() {
+      if (atEnd()) return slides.length - 1;
+      return Math.min(slides.length - 1, Math.max(0, Math.round(Math.abs(fl.scrollLeft) / step())));
+    }
+    function go(i) {
+      i = Math.min(slides.length - 1, Math.max(0, i));
+      fl.scrollTo({ left: (rtl ? -1 : 1) * i * step(), behavior: reduce ? "auto" : "smooth" });
+    }
+    function sync() {
+      var i = index();
+      dots.forEach(function (d, k) { if (k === i) d.setAttribute("aria-current", "true"); else d.removeAttribute("aria-current"); });
+      if (prev) prev.hidden = Math.abs(fl.scrollLeft) < 3;
+      if (next) next.hidden = atEnd();
+    }
+    var ticking = false;
+    fl.addEventListener("scroll", function () {
+      if (ticking) return; ticking = true;
+      requestAnimationFrame(function () { ticking = false; sync(); });
+    }, { passive: true });
+    window.addEventListener("resize", sync);
+    if (prev) prev.addEventListener("click", function () { go(index() - 1); });
+    if (next) next.addEventListener("click", function () { go(index() + 1); });
+
+    /* سحب بالماوس (اللمس يعمل تلقائيًا) */
+    var down = false, startX = 0, startL = 0, dragging = false;
+    fl.addEventListener("pointerdown", function (e) {
+      if (e.pointerType !== "mouse" || e.button !== 0) return;
+      down = true; dragging = false; startX = e.clientX; startL = fl.scrollLeft;
+    });
+    fl.addEventListener("pointermove", function (e) {
+      if (!down) return;
+      var dx = e.clientX - startX;
+      if (!dragging && Math.abs(dx) > 5) {
+        dragging = true; fl.classList.add("drag");
+        try { fl.setPointerCapture(e.pointerId); } catch (err) {}
+      }
+      if (dragging) fl.scrollLeft = startL - dx;
+    });
+    function endDrag() {
+      if (!down) return;
+      down = false;
+      if (dragging) {
+        var i = Math.round(Math.abs(fl.scrollLeft) / step());
+        fl.classList.remove("drag");
+        go(i);
+      }
+      dragging = false;
+    }
+    fl.addEventListener("pointerup", endDrag);
+    fl.addEventListener("pointercancel", endDrag);
+    fl.addEventListener("pointerleave", function (e) { if (!fl.hasPointerCapture || !fl.hasPointerCapture(e.pointerId)) endDrag(); });
+    sync();
+  })();
 
   /* نافذة الحجز */
   var dlg = $("bookDlg"), root = document.documentElement, lastBtn = null;
