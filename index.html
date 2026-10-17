@@ -229,6 +229,15 @@ button,input,select{font:inherit;color:inherit}
 .fl-nav[hidden]{display:none!important}
 .fl-prev{inset-inline-start:-14px}.fl-next{inset-inline-end:-14px}
 @media(min-width:900px){.fleet{gap:18px}.car{flex-basis:calc(50% - 9px)}.fl-nav{display:flex}}
+.car.photo{isolation:isolate;min-height:250px;justify-content:flex-end;gap:6px;padding:18px;color:#fff}
+.car.photo::before{content:"";position:absolute;inset:0;z-index:-2;background:var(--img) 50% 50%/cover no-repeat}
+.car.photo::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(6,10,18,.72) 0%,rgba(6,10,18,.3) 40%,rgba(6,10,18,.45) 62%,rgba(6,10,18,.93) 100%)}
+.car.photo h3{color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.6)}
+.car.photo .cap,.car.photo .pr small{color:#e4e9f1}
+.car.photo .pr{border-top-color:rgba(255,255,255,.3)}
+.car.photo .pr.ask{color:#f4f6fa;font-weight:700}
+.car.photo .pr b{color:#efd9a8}
+@media(min-width:900px){.car.photo{min-height:300px}.car.photo::before{background-position:35% 50%}}
 
 /* ليه Route X */
 .why{list-style:none;padding:0;display:grid;gap:0}
@@ -551,23 +560,17 @@ html.lock{overflow:hidden}
       <button type="button" class="fl-nav fl-prev" aria-label="السيارة السابقة">›</button>
       <button type="button" class="fl-nav fl-next" aria-label="السيارة التالية">‹</button>
       <div class="fleet" id="fleet" tabindex="0" role="group" aria-label="السيارات المتاحة، اسحب لرؤية المزيد">
-        <article class="car glass" data-name="سيدان" data-max="3" data-price="6.5" data-bags="3">
-          <img class="pic" src="img/car-sedan.svg" alt="" width="800" height="450" loading="lazy" draggable="false">
-          <div class="info">
-            <h3>سيدان</h3>
-            <span class="cap"><svg class="ic"><use href="#i-users"/></svg>حتى 3 أفراد</span>
-            <span class="cap"><svg class="ic"><use href="#i-bag"/></svg>حتى 3 حقائب</span>
-            <div class="pr"><b class="num">6.5</b><small>جنيه / كم</small></div>
-          </div>
+        <article class="car glass photo" style="--img:url(img/sedan.webp)" data-name="سيدان" data-max="3" data-price="6.5" data-bags="3">
+          <h3>سيدان</h3>
+          <span class="cap"><svg class="ic"><use href="#i-users"/></svg>حتى 3 أفراد</span>
+          <span class="cap"><svg class="ic"><use href="#i-bag"/></svg>حتى 3 حقائب</span>
+          <div class="pr"><b class="num">6.5</b><small>جنيه / كم</small></div>
         </article>
-        <article class="car glass" data-name="ميني فان" data-max="6" data-price="7.5" data-bags="3">
-          <img class="pic" src="img/car-minivan.svg" alt="" width="800" height="450" loading="lazy" draggable="false">
-          <div class="info">
-            <h3>ميني فان</h3>
-            <span class="cap"><svg class="ic"><use href="#i-users"/></svg>حتى 6 أفراد</span>
-            <span class="cap"><svg class="ic"><use href="#i-bag"/></svg>حتى 3 حقائب</span>
-            <div class="pr"><b class="num">7.5</b><small>جنيه / كم</small></div>
-          </div>
+        <article class="car glass photo" style="--img:url(img/minivan.webp)" data-name="ميني فان" data-max="6" data-price="7.5" data-bags="3">
+          <h3>ميني فان</h3>
+          <span class="cap"><svg class="ic"><use href="#i-users"/></svg>حتى 6 أفراد</span>
+          <span class="cap"><svg class="ic"><use href="#i-bag"/></svg>حتى 3 حقائب</span>
+          <div class="pr"><b class="num">7.5</b><small>جنيه / كم</small></div>
         </article>
         <article class="car glass" data-name="فان" data-max="9" data-price="11" data-bags="">
           <img class="pic" src="img/car-van.svg" alt="" width="800" height="450" loading="lazy" draggable="false">
@@ -578,14 +581,11 @@ html.lock{overflow:hidden}
             <div class="pr"><b class="num">11</b><small>جنيه / كم</small></div>
           </div>
         </article>
-        <article class="car glass" data-name="هاي إس (Hiace)" data-max="14" data-price="" data-bags="">
-          <img class="pic" src="img/car-hiace.svg" alt="" width="800" height="450" loading="lazy" draggable="false">
-          <div class="info">
-            <h3>هاي إس</h3>
-            <span class="cap"><svg class="ic"><use href="#i-users"/></svg>حتى 14 فرد</span>
-            <span class="cap"><svg class="ic"><use href="#i-bag"/></svg>حقائب بدون حد</span>
-            <div class="pr ask">السعر عند الحجز</div>
-          </div>
+        <article class="car glass photo" style="--img:url(img/hiace.webp)" data-name="هاي إس (Hiace)" data-max="14" data-price="" data-bags="">
+          <h3>هاي إس</h3>
+          <span class="cap"><svg class="ic"><use href="#i-users"/></svg>حتى 14 فرد</span>
+          <span class="cap"><svg class="ic"><use href="#i-bag"/></svg>حقائب بدون حد</span>
+          <div class="pr ask">السعر عند الحجز</div>
         </article>
       </div>
       <div class="fl-dots" id="flDots"></div>
