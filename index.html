@@ -132,7 +132,7 @@ button,input,select{font:inherit;color:inherit}
   padding-top:env(safe-area-inset-top,0px);
 }
 @supports ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){
-  .top,.bar{-webkit-backdrop-filter:blur(14px) saturate(1.5);backdrop-filter:blur(14px) saturate(1.5)}
+  .top,.tabs{-webkit-backdrop-filter:blur(14px) saturate(1.5);backdrop-filter:blur(14px) saturate(1.5)}
 }
 .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;height:62px}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;min-width:0}
@@ -386,19 +386,66 @@ html.lock{overflow:hidden}
 }
 @media(prefers-reduced-motion:reduce){.dlg-in{animation:none}}
 
-/* شريط الحجز السفلي */
-.bar{
+/* شريط التنقل السفلي */
+.tabs{
   position:fixed;inset-inline:0;bottom:0;z-index:60;background:var(--bar);border-top:1px solid var(--edge-soft);
-  padding:10px max(14px,env(safe-area-inset-left,0px)) calc(10px + env(safe-area-inset-bottom,0px));
-  display:grid;grid-template-columns:1.7fr 1fr;gap:10px;transition:transform .26s ease;
+  display:grid;grid-template-columns:repeat(5,1fr);align-items:end;
+  padding:6px max(6px,env(safe-area-inset-left,0px)) calc(6px + env(safe-area-inset-bottom,0px));
 }
-.bar.hide{transform:translateY(115%)}
-@media(min-width:900px){.bar{display:none}body{padding-bottom:0}}
+.tab{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:54px;padding:4px 2px;
+  text-decoration:none;color:var(--muted);font-size:.78rem;font-weight:700;line-height:1.3;border-radius:14px;
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:color .18s ease,transform .12s ease;
+}
+.tab .ic{width:24px;height:24px}
+.tab:active{transform:scale(.94)}
+.tab[aria-current="true"]{color:var(--gold)}
+.tab-wa .ic{color:var(--wa)}
+.tab-main{color:var(--gold)}
+.tab-main i{
+  display:grid;place-items:center;width:56px;height:56px;margin-top:-26px;border-radius:50%;
+  background:var(--gold-grad);color:var(--on-gold);
+  box-shadow:0 10px 22px -8px rgba(220,194,143,.75),0 0 0 5px var(--bg),inset 0 1px 0 rgba(255,255,255,.55);
+}
+.tab-main .ic{width:26px;height:26px}
+@media(min-width:900px){.tabs{display:none}body{padding-bottom:0}}
+
+/* خطوات الحجز */
+.prog{padding:12px 18px 10px;display:grid;gap:8px;border-bottom:1px solid var(--edge-soft)}
+.prog .segs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.prog .segs i{height:5px;border-radius:99px;background:var(--edge);transition:background .2s ease}
+.prog .segs i.on{background:var(--gold)}
+.prog span{font-size:.92rem;color:var(--muted)}
+.prog span b{color:var(--ink);font-family:var(--fd)}
+.dlg-body [data-step]{display:none}
+#bookForm[data-cur="1"] [data-step~="1"],#bookForm[data-cur="2"] [data-step~="2"],
+#bookForm[data-cur="3"] [data-step~="3"],#bookForm[data-cur="4"] [data-step~="4"]{display:grid}
+.navrow{display:grid;grid-template-columns:1fr 2fr;gap:10px}
+#bookForm[data-cur="1"] #stBack{display:none}
+#bookForm[data-cur="1"] .navrow{grid-template-columns:1fr}
+#bookForm:not([data-cur="4"]) #send{display:none}
+#bookForm[data-cur="4"] #stNext{display:none}
+
+/* موبايل: محتوى أقل وأوضح */
+.m-only{display:none}
+@media(max-width:759px){
+  body{-webkit-tap-highlight-color:transparent}
+  .m-only{display:inline-flex;margin-top:12px}
+  .m-hide,.hero-card,.hd p,.rows p,.why span{display:none}
+  .sec>.wrap{padding-block:26px}
+  .hd{margin-bottom:16px}
+  .hero>.wrap{padding-block:22px 28px}
+  .rows li,.why li{padding:14px 16px;align-items:center}
+  .rows .ic,.why .ic{margin-top:0}
+  .faq:not(.all) details:nth-child(n+4){display:none}
+  .contact:not(.all) li:nth-child(n+2){display:none}
+  .offer .card{padding:18px}
+}
 @media(max-width:340px){.brand b{font-size:.98rem}.rates b{font-size:1.45rem}}
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .rt-draw{animation:none;stroke-dashoffset:0}
-  .btn,.bar,.faq summary .ic,.car{transition:none}
+  .btn,.faq summary .ic,.car{transition:none}
 }
 </style>
 </head>
@@ -427,6 +474,8 @@ html.lock{overflow:hidden}
 <symbol id="i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
 <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 6h18v12H3zM3 7l9 6.5L21 7"/></symbol>
 <symbol id="i-fb" viewBox="0 0 24 24"><path d="M14 8h2.5V4.5H14A3.5 3.5 0 0 0 10.5 8v2H8v3.5h2.5V21H14v-7.5h2.5L17 10h-3V8.3c0-.2.1-.3.3-.3z"/></symbol>
+<symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-7.5 9 7.5M5 9.5V20h5v-6h4v6h5V9.5"/></symbol>
+<symbol id="i-tag" viewBox="0 0 24 24"><path d="M3 12.5V4h8.5L21 13.5 13.5 21 3 12.5zM7.5 8.5v.01"/></symbol>
 <symbol id="i-copy" viewBox="0 0 24 24"><path d="M9 9h10v11H9zM5 15V4h10"/></symbol>
 </defs></svg>
 
@@ -556,7 +605,7 @@ html.lock{overflow:hidden}
   </div>
 </section>
 
-<section class="sec" aria-labelledby="steps-h">
+<section class="sec m-hide" aria-labelledby="steps-h">
   <div class="wrap">
     <div class="hd"><h2 id="steps-h">إزاي بتحجز</h2><p>ثلاث خطوات وتبقى رحلتك جاهزة.</p></div>
     <ol class="steps">
@@ -579,7 +628,7 @@ html.lock{overflow:hidden}
   </div>
 </section>
 
-<section id="book" class="sec">
+<section id="book" class="sec m-hide">
   <div class="wrap">
     <div class="hd"><h2>احجز مشوارك</h2><p>املا بيانات الرحلة في نافذة سريعة، وهنجهز لك رسالة كاملة على واتساب.</p></div>
     <div class="bookcta glass">
@@ -596,7 +645,7 @@ html.lock{overflow:hidden}
 <section id="faq" class="sec" aria-labelledby="faq-h">
   <div class="wrap">
     <div class="hd"><h2 id="faq-h">أسئلة شائعة</h2></div>
-    <div class="faq">
+    <div class="faq" id="faqList">
       <details><summary>إزاي أحجز؟<svg class="ic"><use href="#i-chev"/></svg></summary><p>املا نموذج الحجز في الصفحة وابعته على واتساب، أو ابعتلنا رسالة على 01092358849. بنرد عليك نأكد السيارة والتكلفة والميعاد.</p></details>
       <details><summary>الحساب بيتم إزاي؟<svg class="ic"><use href="#i-chev"/></svg></summary><p>الحساب بالكيلومتر حسب نوع السيارة، وسعر الكيلو ظاهر في قسم الأسعار. التكلفة النهائية بتتأكد بعد تحديد المسافة الفعلية.</p></details>
       <details><summary>السيارة بتتحدد إزاي؟<svg class="ic"><use href="#i-chev"/></svg></summary><p>بتتحدد تلقائيًا في نموذج الحجز حسب عدد الأفراد والحقائب، وبتشوفها مع سعر الكيلو قبل ما تبعت الطلب.</p></details>
@@ -605,13 +654,14 @@ html.lock{overflow:hidden}
       <details><summary>إزاي أحدد موقعي بدقة؟<svg class="ic"><use href="#i-chev"/></svg></summary><p>اضغط "موقعي الحالي" في نقطة الانطلاق، أو اختار المكان من خرائط جوجل والصق الرابط في الخانة. الموقع بيوصل للسواق في رسالة الواتساب.</p></details>
       <details><summary>إيه موضوع كاش باك 10%؟<svg class="ic"><use href="#i-chev"/></svg></summary><p>بنقدم كاش باك 10% على الرحلة. اسأل عنه على واتساب وهنقولك التفاصيل.</p></details>
     </div>
+    <button class="btn btn-glass btn-sm m-only" id="faqMore" type="button" aria-expanded="false">عرض كل الأسئلة</button>
   </div>
 </section>
 
 <section id="contact" class="sec">
   <div class="wrap">
     <div class="hd"><h2>تواصل معانا</h2><p>الإسكندرية، مصر. مفتوحين دائمًا.</p></div>
-    <ul class="contact glass">
+    <ul class="contact glass" id="ctList">
       <li>
         <div class="who"><svg class="ic"><use href="#i-wa"/></svg><div><small>واتساب الحجوزات</small><div class="v num ltr" id="n0">01092358849</div></div></div>
         <div class="row"><a class="btn btn-wa btn-sm" href="https://wa.me/201092358849" target="_blank" rel="noopener">افتح واتساب</a><a class="btn btn-glass btn-sm" href="tel:+201092358849"><svg class="ic"><use href="#i-phone"/></svg>اتصل</a><button class="btn btn-glass btn-sm" type="button" data-copy="n0">نسخ الرقم</button></div>
@@ -633,6 +683,7 @@ html.lock{overflow:hidden}
         <div class="row"><a class="btn btn-glass btn-sm" href="https://www.facebook.com/share/1EqvkVx1hp/?mibextid=wwXIfr" target="_blank" rel="noopener">افتح الصفحة</a></div>
       </li>
     </ul>
+    <button class="btn btn-glass btn-sm m-only" id="ctMore" type="button" aria-expanded="false">عرض كل وسائل التواصل</button>
     <p class="addr">العنوان: الإسكندرية، مصر 21613</p>
   </div>
 </section>
@@ -650,10 +701,11 @@ html.lock{overflow:hidden}
       <div><h2 id="dlg-t">احجز مشوارك</h2><p>املا البيانات وابعتها لنا على واتساب</p></div>
       <button class="x" type="button" data-close aria-label="إغلاق"><svg class="ic"><use href="#i-plus"/></svg></button>
     </div>
-    <form id="bookForm" class="form" autocomplete="off" novalidate>
+    <form id="bookForm" class="form" autocomplete="off" novalidate data-cur="1">
+      <div class="prog" id="prog"><div class="segs" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i></div><span>الخطوة <b id="progN">1</b> من 4</span></div>
       <div class="dlg-body">
 
-      <fieldset class="fset">
+      <fieldset class="fset" data-step="1">
         <legend>مسارك</legend>
         <div class="fg">
           <div class="fld full">
@@ -695,7 +747,7 @@ html.lock{overflow:hidden}
         </div>
       </fieldset>
 
-      <fieldset class="fset">
+      <fieldset class="fset" data-step="2">
         <legend>الأفراد والحقائب</legend>
         <div class="fg">
           <div class="fld">
@@ -717,7 +769,7 @@ html.lock{overflow:hidden}
         </div>
       </fieldset>
 
-      <fieldset class="fset">
+      <fieldset class="fset" data-step="3">
         <legend>وقت الانطلاق</legend>
         <div class="fg">
           <div class="fld full">
@@ -737,7 +789,7 @@ html.lock{overflow:hidden}
         </div>
       </fieldset>
 
-      <fieldset class="fset">
+      <fieldset class="fset" data-step="4">
         <legend>بياناتك</legend>
         <div class="fg">
           <div class="fld full">
@@ -758,7 +810,7 @@ html.lock{overflow:hidden}
         </div>
       </fieldset>
 
-      <div class="sum" id="sum" aria-live="polite">
+      <div class="sum" id="sum" aria-live="polite" data-step="2 4">
         <span class="k">السيارة (بتتحدد حسب عدد الأفراد والحقائب)</span>
         <span class="car-n" id="sCar">—</span>
         <div class="row"><span id="sBags"></span><span id="sRate"></span></div>
@@ -770,7 +822,11 @@ html.lock{overflow:hidden}
       </div>
       <div class="sendrow">
         <p class="msg" id="formMsg" role="alert"></p>
-        <a id="send" class="btn btn-wa" href="https://wa.me/201092358849" target="_blank" rel="noopener"><svg class="ic"><use href="#i-wa"/></svg>ابعت الطلب على واتساب</a>
+        <div class="navrow">
+          <button class="btn btn-glass" id="stBack" type="button">السابق</button>
+          <button class="btn btn-gold" id="stNext" type="button">التالي</button>
+        <a id="send" class="btn btn-wa" href="https://wa.me/201092358849" target="_blank" rel="noopener"><svg class="ic"><use href="#i-wa"/></svg>ابعت على واتساب</a>
+        </div>
         <p class="fine">الزرار بيفتح واتساب برسالة جاهزة. الحجز بيتأكد لما نرد عليك، والتكلفة والمدة تقديرية وبتتأكد بعد تحديد المسافة الفعلية.</p>
       </div>
     
@@ -778,10 +834,13 @@ html.lock{overflow:hidden}
   </div>
 </dialog>
 
-<div class="bar" id="bar">
-  <a class="btn btn-gold" href="#book"><svg class="ic"><use href="#i-car"/></svg>احجز الآن</a>
-  <a class="btn btn-glass" href="tel:+201092358849"><svg class="ic"><use href="#i-phone"/></svg>اتصل</a>
-</div>
+<nav class="tabs" id="bar" aria-label="التنقل السريع">
+  <a class="tab" href="#top" data-sec="top"><svg class="ic"><use href="#i-home"/></svg><span>الرئيسية</span></a>
+  <a class="tab" href="#prices" data-sec="prices"><svg class="ic"><use href="#i-tag"/></svg><span>الأسعار</span></a>
+  <a class="tab tab-main" href="#book"><i><svg class="ic"><use href="#i-car"/></svg></i><span>احجز</span></a>
+  <a class="tab tab-wa" href="https://wa.me/201092358849" target="_blank" rel="noopener"><svg class="ic"><use href="#i-wa"/></svg><span>واتساب</span></a>
+  <a class="tab" href="tel:+201092358849"><svg class="ic"><use href="#i-phone"/></svg><span>اتصل</span></a>
+</nav>
 
 <script>
 (function () {
@@ -985,13 +1044,13 @@ html.lock{overflow:hidden}
 
   function missing() {
     var out = [];
-    if (!val("f-name")) out.push(["f-name", "اسم العميل"]);
-    if (toLatin(val("f-phone")).replace(/\D/g, "").length < 8) out.push(["f-phone", "رقم الهاتف"]);
     if (!val("f-from")) out.push(["f-from", "نقطة الانطلاق"]);
     if (!val("f-to")) out.push(["f-to", "نقطة الوصول"]);
     if (!(num("f-pax") > 0)) out.push(["f-pax", "عدد الأفراد"]);
     if (!val("f-date")) out.push(["f-date", "التاريخ"]);
     if (!val("f-time")) out.push(["f-time", "الساعة"]);
+    if (!val("f-name")) out.push(["f-name", "اسم العميل"]);
+    if (toLatin(val("f-phone")).replace(/\D/g, "").length < 8) out.push(["f-phone", "رقم الهاتف"]);
     return out;
   }
 
@@ -1063,12 +1122,64 @@ html.lock{overflow:hidden}
     if (m.length) {
       e.preventDefault();
       msg.textContent = "كمّل البيانات دي الأول: " + m.map(function (x) { return x[1]; }).join("، ") + ".";
+      showStep(STEP_OF[m[0][0]] || 1);
+      msg.textContent = "كمّل البيانات دي الأول: " + m.map(function (x) { return x[1]; }).join("، ") + ".";
       var f = $(m[0][0]);
       if (f.scrollIntoView) f.scrollIntoView({ block: "center", behavior: "smooth" });
       try { f.focus({ preventScroll: true }); } catch (err) {}
-    } else { msg.textContent = ""; setTimeout(closeBook, 400); }
+    } else { msg.textContent = ""; setTimeout(function () { closeBook(); showStep(1); }, 400); }
   });
   build();
+
+  /* خطوات الحجز */
+  var form = $("bookForm"), dBody = form.querySelector(".dlg-body"), cur = 1, TOTAL = 4;
+  var segs = [].slice.call(document.querySelectorAll("#prog .segs i"));
+  var STEP_OF = { "f-from": 1, "f-to": 1, "f-pax": 2, "f-date": 3, "f-time": 3, "f-name": 4, "f-phone": 4 };
+  function showStep(n) {
+    cur = Math.max(1, Math.min(TOTAL, n));
+    form.setAttribute("data-cur", cur);
+    segs.forEach(function (sg, i) { sg.classList.toggle("on", i < cur); });
+    $("progN").textContent = cur;
+    msg.textContent = "";
+    if (dBody) dBody.scrollTop = 0;
+  }
+  $("stNext").addEventListener("click", function () {
+    var m = missing().filter(function (x) { return STEP_OF[x[0]] === cur; });
+    if (m.length) {
+      msg.textContent = "كمّل البيانات دي الأول: " + m.map(function (x) { return x[1]; }).join("، ") + ".";
+      try { $(m[0][0]).focus(); } catch (err) {}
+      return;
+    }
+    showStep(cur + 1);
+  });
+  $("stBack").addEventListener("click", function () { showStep(cur - 1); });
+  form.addEventListener("keydown", function (e) {
+    if (e.key === "Enter" && e.target && e.target.tagName === "INPUT" && cur < TOTAL) { e.preventDefault(); $("stNext").click(); }
+  });
+
+  /* عرض المزيد على الموبايل */
+  [["faqMore", "faqList", "عرض كل الأسئلة", "عرض أقل"], ["ctMore", "ctList", "عرض كل وسائل التواصل", "عرض أقل"]].forEach(function (a) {
+    var b = $(a[0]), x = $(a[1]);
+    if (!b || !x) return;
+    b.addEventListener("click", function () {
+      var on = x.classList.toggle("all");
+      b.textContent = on ? a[3] : a[2]; b.setAttribute("aria-expanded", on ? "true" : "false");
+    });
+  });
+
+  /* تمييز التبويب الحالي في الشريط السفلي */
+  (function () {
+    var tabs = [].slice.call(document.querySelectorAll(".tab[data-sec]")), pr = $("prices"), tk = false;
+    if (!tabs.length || !pr) return;
+    function upd() {
+      var r = pr.getBoundingClientRect(), vh = window.innerHeight, k = "";
+      if (r.top > vh * 0.5) k = "top"; else if (r.bottom > vh * 0.35) k = "prices";
+      tabs.forEach(function (t) { if (t.getAttribute("data-sec") === k) t.setAttribute("aria-current", "true"); else t.removeAttribute("aria-current"); });
+    }
+    window.addEventListener("scroll", function () { if (tk) return; tk = true; requestAnimationFrame(function () { tk = false; upd(); }); }, { passive: true });
+    window.addEventListener("resize", upd);
+    upd();
+  })();
 
   /* نسخ الأرقام */
   [].forEach.call(document.querySelectorAll("[data-copy]"), function (btn) {
