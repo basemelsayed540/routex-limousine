@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" preserveAspectRatio="xMidYMin slice" role="img" aria-label="سيارة سيدان">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1c2a44"/><stop offset=".62" stop-color="#101827"/><stop offset="1" stop-color="#090d14"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".5" cy=".55" r=".55">
+      <stop offset="0" stop-color="#5f86c4" stop-opacity=".45"/><stop offset="1" stop-color="#5f86c4" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4a5468"/><stop offset=".38" stop-color="#232a38"/><stop offset="1" stop-color="#0d1017"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8fb0d8" stop-opacity=".85"/><stop offset="1" stop-color="#1a2438" stop-opacity=".95"/>
+    </linearGradient>
+    <radialGradient id="rim" cx=".4" cy=".35" r=".8">
+      <stop offset="0" stop-color="#f3f5f9"/><stop offset="1" stop-color="#7d8798"/>
+    </radialGradient>
+    <g id="wheel">
+      <circle r="50" fill="#07090d"/>
+      <circle r="41" fill="#14171d"/>
+      <circle r="28" fill="url(#rim)"/>
+      <g stroke="#3b4352" stroke-width="5" stroke-linecap="round">
+        <line x1="0" y1="0" x2="0" y2="-24"/><line x1="0" y1="0" x2="23" y2="-7"/>
+        <line x1="0" y1="0" x2="14" y2="19"/><line x1="0" y1="0" x2="-14" y2="19"/><line x1="0" y1="0" x2="-23" y2="-7"/>
+      </g>
+      <circle r="6" fill="#1b202a"/>
+    </g>
+  </defs>
+  <rect width="800" height="450" fill="url(#bg)"/>
+  <rect width="800" height="450" fill="url(#glow)"/>
+  <rect y="338" width="800" height="112" fill="#0b0f17"/>
+  <rect y="338" width="800" height="2" fill="#2a3550" opacity=".7"/>
+  <ellipse cx="400" cy="342" rx="350" ry="16" fill="#000" opacity=".6"/>
+  <!-- body -->
+  <path d="M62 306 L62 276 C62 260 78 252 104 247 L196 236 C242 204 296 184 358 180 L474 180 C530 182 572 204 606 232 L694 244 C724 250 740 262 740 286 L740 306 Z" fill="url(#body)"/>
+  <path d="M104 247 L196 236 C242 204 296 184 358 180 L474 180 C530 182 572 204 606 232 L694 244" fill="none" stroke="#9aa6bb" stroke-width="2" opacity=".7"/>
+  <!-- glass -->
+  <path d="M252 232 C284 205 322 193 362 191 L398 191 L398 232 Z" fill="url(#glass)"/>
+  <path d="M410 191 L472 191 C516 193 550 210 578 232 L410 232 Z" fill="url(#glass)"/>
+  <!-- door lines, handles, beltline -->
+  <g stroke="#05070b" stroke-width="2" opacity=".8" fill="none">
+    <path d="M404 191 L404 296"/><path d="M262 236 L252 296"/><path d="M574 232 L584 296"/>
+  </g>
+  <path d="M110 262 L690 262" stroke="#8d99ae" stroke-width="2" opacity=".55"/>
+  <rect x="352" y="246" width="36" height="5" rx="2.5" fill="#aeb8ca"/>
+  <rect x="428" y="246" width="36" height="5" rx="2.5" fill="#aeb8ca"/>
+  <!-- lights -->
+  <path d="M706 254 L734 262 L733 270 L702 266 Z" fill="#f6fbff"/>
+  <path d="M706 254 L734 262" stroke="#9fd0ff" stroke-width="3"/>
+  <path d="M64 262 L96 256 L98 266 L63 272 Z" fill="#e0243a"/>
+  <rect x="64" y="294" width="676" height="6" fill="#06080c" opacity=".7"/>
+  <!-- wheels -->
+  <circle cx="205" cy="296" r="56" fill="#06080c"/>
+  <circle cx="596" cy="296" r="56" fill="#06080c"/>
+  <use href="#wheel" x="205" y="296"/>
+  <use href="#wheel" x="596" y="296"/>
+</svg>
