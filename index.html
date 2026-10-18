@@ -237,6 +237,23 @@ button,input,select{font:inherit;color:inherit}
 .car.photo .pr{border-top-color:rgba(255,255,255,.3)}
 .car.photo .pr.ask{color:#f4f6fa;font-weight:700}
 .car.photo .pr b{color:#efd9a8}
+.car[data-gallery]{cursor:pointer}
+.gal-btn{position:absolute;top:12px;inset-inline-start:12px;z-index:2;display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border:1px solid rgba(255,255,255,.35);border-radius:999px;background:rgba(6,10,18,.6);color:#fff;font:600 .85rem/1 inherit;font-family:inherit;cursor:pointer;backdrop-filter:blur(6px)}
+.gal-btn .ic{width:16px;height:16px}
+.gal-btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.gal{border:0;padding:0;max-width:none;max-height:none;width:100%;height:100%;background:rgba(4,7,12,.96);color:#fff}
+.gal::backdrop{background:rgba(0,0,0,.8)}
+.gal[open]{display:flex;flex-direction:column}
+.gal-top{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;font-weight:700}
+.gal-top button,.gal-nav{border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.08);color:#fff;border-radius:999px;width:44px;height:44px;font-size:1.4rem;cursor:pointer;display:grid;place-items:center}
+.gal-stage{flex:1;min-height:0;position:relative;display:flex;align-items:center;justify-content:center;padding:0 12px}
+.gal-stage img{max-width:100%;max-height:100%;object-fit:contain;border-radius:10px;touch-action:pan-y}
+.gal-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:2}
+.gal-nav.p{inset-inline-end:10px}.gal-nav.n{inset-inline-start:10px}
+.gal-th{display:flex;gap:8px;justify-content:center;padding:12px;overflow-x:auto}
+.gal-th button{flex:0 0 auto;width:72px;height:48px;padding:0;border:2px solid transparent;border-radius:8px;overflow:hidden;background:none;cursor:pointer;opacity:.6}
+.gal-th button[aria-current=true]{border-color:var(--gold);opacity:1}
+.gal-th img{width:100%;height:100%;object-fit:cover;display:block}
 @media(min-width:900px){.car.photo{min-height:300px}.car.photo::before{background-position:35% 50%}}
 
 /* ليه Route X */
@@ -560,11 +577,18 @@ html.lock{overflow:hidden}
       <button type="button" class="fl-nav fl-prev" aria-label="السيارة السابقة">›</button>
       <button type="button" class="fl-nav fl-next" aria-label="السيارة التالية">‹</button>
       <div class="fleet" id="fleet" tabindex="0" role="group" aria-label="السيارات المتاحة، اسحب لرؤية المزيد">
-        <article class="car glass photo" style="--img:url(img/sedan.webp)" data-name="سيدان" data-max="3" data-price="6.5" data-bags="3">
+        <article class="car glass photo" style="--img:url(img/sedan.webp)" data-name="سيدان" data-max="3" data-price="6.5" data-bags="3" data-gallery="img/sedan.webp,img/sedan-interior.webp" data-gtitle="سيدان">
+          <button type="button" class="gal-btn" aria-label="عرض صور سيدان"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="1.6"/><path d="M21 16l-5-5-8 8"/></svg>2 صور</button>
           <h3>سيدان</h3>
           <span class="cap"><svg class="ic"><use href="#i-users"/></svg>حتى 3 أفراد</span>
           <span class="cap"><svg class="ic"><use href="#i-bag"/></svg>حتى 3 حقائب</span>
           <div class="pr"><b class="num">6.5</b><small>جنيه / كم</small></div>
+        </article>
+        <article class="car glass photo" style="--img:url(img/xpander-front.webp)" data-name="ميتسوبيشي إكسباندر" data-max="7" data-price="" data-bags="3" data-gallery="img/xpander-front.webp,img/xpander-side.webp" data-gtitle="ميتسوبيشي إكسباندر">
+          <button type="button" class="gal-btn" aria-label="عرض صور إكسباندر"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="1.6"/><path d="M21 16l-5-5-8 8"/></svg>2 صور</button>
+          <h3>ميتسوبيشي إكسباندر</h3>
+          <span class="cap"><svg class="ic"><use href="#i-users"/></svg>حتى 7 أفراد</span>
+          <div class="pr ask">السعر عند الحجز</div>
         </article>
         <article class="car glass photo" style="--img:url(img/minivan.webp)" data-name="ميني فان" data-max="6" data-price="7.5" data-bags="3">
           <h3>ميني فان</h3>
@@ -694,6 +718,16 @@ html.lock{overflow:hidden}
   <div class="wrap"><span>Route X Limousine Service</span><span>الإسكندرية، مصر</span></div>
 </footer>
 
+
+<dialog id="gal" class="gal" aria-label="معرض صور السيارة">
+  <div class="gal-top"><span id="galT"></span><button type="button" id="galX" aria-label="إغلاق">×</button></div>
+  <div class="gal-stage">
+    <button type="button" class="gal-nav p" id="galP" aria-label="الصورة السابقة">›</button>
+    <img id="galImg" alt="" draggable="false">
+    <button type="button" class="gal-nav n" id="galN" aria-label="الصورة التالية">‹</button>
+  </div>
+  <div class="gal-th" id="galTh"></div>
+</dialog>
 
 <dialog id="bookDlg" class="dlg" aria-labelledby="dlg-t">
   <div class="dlg-in">
@@ -1266,6 +1300,44 @@ html.lock{overflow:hidden}
     fl.addEventListener("pointercancel", endDrag);
     fl.addEventListener("pointerleave", function (e) { if (!fl.hasPointerCapture || !fl.hasPointerCapture(e.pointerId)) endDrag(); });
     sync();
+  })();
+
+  /* معرض صور السيارة: يفتح عند الضغط على البطاقة */
+  (function () {
+    var g = $("gal"), img = $("galImg"), th = $("galTh"), list = [], at = 0, ttl = "";
+    if (!g) return;
+    function show(i) {
+      at = (i + list.length) % list.length;
+      img.src = list[at]; img.alt = ttl + " - صورة " + (at + 1);
+      [].forEach.call(th.children, function (b, k) { if (k === at) b.setAttribute("aria-current", "true"); else b.removeAttribute("aria-current"); });
+    }
+    function open(card) {
+      list = card.getAttribute("data-gallery").split(","); ttl = card.getAttribute("data-gtitle") || "";
+      $("galT").textContent = ttl; th.innerHTML = "";
+      list.forEach(function (src, k) {
+        var b = document.createElement("button"), im = document.createElement("img");
+        b.type = "button"; b.setAttribute("aria-label", "صورة " + (k + 1)); im.src = src; im.alt = "";
+        b.appendChild(im); b.addEventListener("click", function () { show(k); }); th.appendChild(b);
+      });
+      show(0);
+      if (g.showModal) { if (!g.open) g.showModal(); } else g.setAttribute("open", "");
+    }
+    function close() { if (g.close) { if (g.open) g.close(); } else g.removeAttribute("open"); }
+    [].forEach.call(document.querySelectorAll(".car[data-gallery]"), function (c) {
+      c.addEventListener("click", function () { open(c); });
+    });
+    $("galX").addEventListener("click", close);
+    $("galP").addEventListener("click", function () { show(at - 1); });
+    $("galN").addEventListener("click", function () { show(at + 1); });
+    g.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowLeft") show(at + 1); else if (e.key === "ArrowRight") show(at - 1);
+    });
+    var sx = null;
+    img.addEventListener("pointerdown", function (e) { sx = e.clientX; });
+    img.addEventListener("pointerup", function (e) {
+      if (sx == null) return; var dx = e.clientX - sx; sx = null;
+      if (Math.abs(dx) > 40) show(at + (dx < 0 ? 1 : -1));
+    });
   })();
 
   /* نافذة الحجز */
