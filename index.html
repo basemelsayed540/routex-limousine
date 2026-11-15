@@ -941,13 +941,18 @@ html.lock{overflow:hidden}
     if (url) return { kind: "link", url: url, text: v };
     return { kind: "text", text: v };
   }
+  /* رموز الرسالة بأكواد يونيكود صريحة */
+  var E = { new: "\u{1F195}", star: "\u2728", user: "\u{1F464}", phone: "\u{1F4DE}", alt: "\u260E\uFE0F",
+    route: "\u{1F6E3}\uFE0F", from: "\u{1F7E2}", via: "\u2795", to: "\u{1F3C1}", dist: "\u{1F4CF}",
+    pax: "\u{1F465}", bag: "\u{1F9F3}", car: "\u{1F697}", price: "\u{1F4B0}", cal: "\u{1F4C5}",
+    clock: "\u23F0", wait: "\u23F3", cost: "\u{1F4B5}", ok: "\u2705", pray: "\u{1F64F}", pin: "\u{1F4CD}" };
   function locMsg(icon, label, p) {
     if (p.kind === "empty") return [];
     var out = [];
-    if (p.kind === "text") return ["*" + label + ":* " + p.text];
+    if (p.kind === "text") return [icon + " *" + label + ":* " + p.text];
     var u = p.url || p.link;
-    out.push("*" + label + ":* " + (p.text && p.text !== u ? p.text : "حسب الموقع على الخريطة"));
-    out.push("الموقع: " + u);
+    out.push(icon + " *" + label + ":* " + (p.text && p.text !== u ? p.text : "حسب الموقع على الخريطة"));
+    out.push(E.pin + " " + u);
     return out;
   }
   function mapHref(p) {
@@ -1091,34 +1096,34 @@ html.lock{overflow:hidden}
   var link = $("send"), msg = $("formMsg");
   function build() {
     var r = refresh(), P = updateMaps(), L = [], bar = "━━━━━━━━━━━━━━━";
-    L.push("*طلب حجز جديد*");
-    L.push("*Route X Limousine*");
+    L.push(E.new + " *طلب حجز جديد*");
+    L.push(E.star + " *Route X Limousine*");
     L.push(bar, "");
-    L.push("*بيانات العميل*");
-    L.push("*الاسم:* " + val("f-name"));
-    L.push("*الهاتف:* " + val("f-phone"));
-    if (val("f-phone2")) L.push("*هاتف بديل:* " + val("f-phone2"));
-    L.push("", "*مسار الرحلة*");
-    L = L.concat(locMsg("", "الانطلاق", P.from), locMsg("", "محطة إضافية", P.via), locMsg("", "الوصول", P.to));
-    if (r.km > 0) L.push("*المسافة التقريبية:* " + fmtNum(r.km) + " كم");
-    L.push("", "*الركاب والسيارة*");
-    L.push("*عدد الأفراد:* " + val("f-pax"));
-    L.push("*عدد الحقائب:* " + (val("f-bags") || "0"));
+    L.push(E.user + " *بيانات العميل*");
+    L.push(E.user + " *الاسم:* " + val("f-name"));
+    L.push(E.phone + " *الهاتف:* " + val("f-phone"));
+    if (val("f-phone2")) L.push(E.alt + " *هاتف بديل:* " + val("f-phone2"));
+    L.push("", E.route + " *مسار الرحلة*");
+    L = L.concat(locMsg(E.from, "الانطلاق", P.from), locMsg(E.via, "محطة إضافية", P.via), locMsg(E.to, "الوصول", P.to));
+    if (r.km > 0) L.push(E.dist + " *المسافة التقريبية:* " + fmtNum(r.km) + " كم");
+    L.push("", E.pax + " *الركاب والسيارة*");
+    L.push(E.pax + " *عدد الأفراد:* " + val("f-pax"));
+    L.push(E.bag + " *عدد الحقائب:* " + (val("f-bags") || "0"));
     if (r.car) {
-      L.push("*السيارة:* " + r.car.name);
-      if (r.car.price != null) L.push("*سعر الكيلو:* " + fmtNum(r.car.price) + " جنيه");
+      L.push(E.car + " *السيارة:* " + r.car.name);
+      if (r.car.price != null) L.push(E.price + " *سعر الكيلو:* " + fmtNum(r.car.price) + " جنيه");
     }
-    L.push("", "*موعد الرحلة*");
+    L.push("", E.cal + " *موعد الرحلة*");
     var d = dateText(), t = timeText();
-    L.push("*التاريخ:* " + (d || "—"));
-    L.push("*ساعة الانطلاق:* " + (t || "—"));
-    L.push("*الوصول المتوقع:* " + (r.km > 0 ? etaText(r.km) + " (تقديري)" : "يتحدد بعد تأكيد المسار"));
+    L.push(E.cal + " *التاريخ:* " + (d || "—"));
+    L.push(E.clock + " *ساعة الانطلاق:* " + (t || "—"));
+    L.push(E.wait + " *الوصول المتوقع:* " + (r.km > 0 ? etaText(r.km) + " (تقديري)" : "يتحدد بعد تأكيد المسار"));
     if (r.km > 0 && r.car && r.car.price != null) {
-      L.push("", "*التكلفة*");
-      L.push("*التكلفة التقريبية:* " + Math.round(r.km * r.car.price) + " جنيه (تقديرية)");
+      L.push("", E.cost + " *التكلفة*");
+      L.push(E.cost + " *التكلفة التقريبية:* " + Math.round(r.km * r.car.price) + " جنيه (تقديرية)");
     }
-    L.push("", bar, "برجاء تأكيد الحجز، شكرًا لكم");
-    link.href = "https://wa.me/" + NUMBER + "?text=" + encodeURIComponent(L.join("\n"));
+    L.push("", bar, E.ok + " برجاء تأكيد الحجز، شكرًا لكم " + E.pray);
+    link.href = "https://api.whatsapp.com/send?phone=" + NUMBER + "&text=" + encodeURIComponent(L.join("\n"));
   }
 
   /* عدادات الأفراد والحقائب */
